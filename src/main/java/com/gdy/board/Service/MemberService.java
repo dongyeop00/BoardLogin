@@ -29,7 +29,9 @@ public class MemberService {
             1. 회원이 입력한 이메일로 DB에서 조회를 한다.
             2. DB에서 조회한 비밀번호와 사용자가 입력한 비밀번호가 일치하는지 판단.
          */
+        //1. 회원이 입력한 이메일로 db에서 조회
         Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(memberDTO.getMemberEmail());
+        //2. db에서 조회한 비밀번호와 사용자가 입력한 비밀번호가 일치하는지 판단.
         if(byMemberEmail.isPresent()){ //조회 결과가 있다.
             MemberEntity memberEntity = byMemberEmail.get(); //엔티티 객체 가져옴
             if(memberEntity.getMemberPassword().equals(memberDTO.getMemberPassword())){ //비밀번호 일치
@@ -46,7 +48,7 @@ public class MemberService {
         }
     }
 
-    public List<MemberDTO> findAll() {
+    public List<MemberDTO> findAll() { //회원 목록 출력을 위한 함수
         //Entity List를 DTO List로 줘야함
         List<MemberEntity> memberEntityList = memberRepository.findAll();
         List<MemberDTO> memberDTOList = new ArrayList<>();
@@ -60,5 +62,19 @@ public class MemberService {
 
         return memberDTOList;
 
+    }
+
+    public MemberDTO findById(Long id) {
+        //옵셔널 객체를 한번 까야 entity 객체가 보임 -> dto로 변환을하고 controller로 줘야함
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
+        if(optionalMemberEntity.isPresent()){
+            //MemberEntity memberEntity = optionalMemberEntity.get();
+            //MemberDTO memberDTO = MemberDTO.toMemberDTO(memberEntity);
+            //return memberDTO;
+            return MemberDTO.toMemberDTO(optionalMemberEntity.get());
+        }
+        else{
+            return null;
+        }
     }
 }
