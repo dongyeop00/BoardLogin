@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.lang.reflect.Member;
 import java.util.List;
 
 @Controller
@@ -65,5 +66,24 @@ public class MemberController {
         MemberDTO memberDTO = memberService.findById(id);
         model.addAttribute("member",memberDTO);
         return "detail"; //값들을 detail로 가져간다
+    }
+
+    @GetMapping("/member/update")
+    public String updateForm(HttpSession session, Model model){
+        //내 정보는 session에 담아 놨음
+        //session에 있는 이메일 값을 가져오고, 이메일로 나의 디비 전체 정보를 담고
+        //update된 model을 전달
+
+        String myEmail = (String) session.getAttribute("loginEmail");
+        MemberDTO memberDTO = memberService.updateForm(myEmail);
+        model.addAttribute("updateMember",memberDTO);
+        return "update";
+    }
+
+    @PostMapping("/member/update")
+    public String update(@ModelAttribute MemberDTO memberDTO){
+        memberService.update(memberDTO);
+        //다른 메서드가 가지고 있는 주소를 요청
+        return "redirect:/member/" + memberDTO.getId();
     }
 }
