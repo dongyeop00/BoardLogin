@@ -86,4 +86,11 @@ public class MemberController {
         //다른 메서드가 가지고 있는 주소를 요청
         return "redirect:/member/" + memberDTO.getId();
     }
+
+    @GetMapping("/member/delete/{id}")
+    public String update(@PathVariable Long id){
+        memberService.deleteById(id);
+        //return "list"; //우리는 dto를 list로 담아서 보냇기 때문에 list를 리턴하면 안됨
+        return "redirect:/member";
+    }
 }

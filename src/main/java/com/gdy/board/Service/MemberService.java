@@ -92,4 +92,8 @@ public class MemberService {
         //toUpdateMemberEntity를 안만들어주면 insert가 되어버림
         memberRepository.save(MemberEntity.toUpdateMemberEntity(memberDTO));
     }
+
+    public void deleteById(Long id) {
+        memberRepository.deleteById(id);
+    }
 }
