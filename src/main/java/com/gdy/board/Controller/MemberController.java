@@ -2,6 +2,7 @@ package com.gdy.board.Controller;
 
 import com.gdy.board.DTO.MemberDTO;
 import com.gdy.board.Service.MemberService;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -92,5 +93,11 @@ public class MemberController {
         memberService.deleteById(id);
         //return "list"; //우리는 dto를 list로 담아서 보냇기 때문에 list를 리턴하면 안됨
         return "redirect:/member";
+    }
+
+    @GetMapping("/member/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "index";
     }
 }
