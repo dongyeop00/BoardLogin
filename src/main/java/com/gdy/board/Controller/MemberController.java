@@ -73,7 +73,7 @@ public class MemberController {
     public String updateForm(HttpSession session, Model model){
         //내 정보는 session에 담아 놨음
         //session에 있는 이메일 값을 가져오고, 이메일로 나의 디비 전체 정보를 담고
-        //update된 model을 전달
+        //update된 model을 전달.
 
         String myEmail = (String) session.getAttribute("loginEmail");
         MemberDTO memberDTO = memberService.updateForm(myEmail);
